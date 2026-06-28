@@ -5,16 +5,19 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
+import org.jboss.logging.Logger;
 
 @Provider
 public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
+
+    private static final Logger LOG = Logger.getLogger(GlobalExceptionMapper.class);
 
     @Override
     public Response toResponse(Throwable exception) {
 
         if (exception instanceof ResourceNotFoundException) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(com.dat.common.dto.ApiResponse.error(exception.getMessage()))
+                    .entity(ApiResponse.error(exception.getMessage()))
                     .build();
         }
 
@@ -23,6 +26,8 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
                     .entity(ApiResponse.error("Invalid request data"))
                     .build();
         }
+
+        LOG.error("Unhandled exception occurred", exception);
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(ApiResponse.error("Internal server error"))

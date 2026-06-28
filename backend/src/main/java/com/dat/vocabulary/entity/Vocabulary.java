@@ -19,7 +19,10 @@ public class Vocabulary extends PanacheEntityBase {
     public Long id;
 
     @Column(nullable = false, length = 255)
-    public String japanese;
+    public String kana;
+
+    @Column(length = 255)
+    public String kanji;
 
     @Column(length = 255)
     public String romaji;
@@ -30,14 +33,14 @@ public class Vocabulary extends PanacheEntityBase {
     @Column(name = "meaning_vi", nullable = false, length = 500)
     public String meaningVi;
 
-    @Column(name = "example_jp", columnDefinition = "TEXT")
-    public String exampleJp;
+    @Column(name = "jlpt_level", length = 10)
+    public String jlptLevel;
 
-    @Column(name = "example_en", columnDefinition = "TEXT")
-    public String exampleEn;
+    @Column(name = "part_of_speech", length = 50)
+    public String partOfSpeech;
 
-    @Column(name = "example_vi", columnDefinition = "TEXT")
-    public String exampleVi;
+    @Column(columnDefinition = "TEXT")
+    public String note;
 
     @Column(name = "created_at", insertable = false, updatable = false)
     public LocalDateTime createdAt;
