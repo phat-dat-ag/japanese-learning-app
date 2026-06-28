@@ -1,22 +1,13 @@
 package com.dat.vocabulary.entity;
 
-import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
+import com.dat.common.entity.AuditableEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "vocabularies")
-public class Vocabulary extends PanacheEntityBase {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+public class Vocabulary extends AuditableEntity {
 
     @Column(nullable = false, length = 255)
     public String kana;
@@ -41,10 +32,4 @@ public class Vocabulary extends PanacheEntityBase {
 
     @Column(columnDefinition = "TEXT")
     public String note;
-
-    @Column(name = "created_at", insertable = false, updatable = false)
-    public LocalDateTime createdAt;
-
-    @Column(name = "updated_at", insertable = false, updatable = false)
-    public LocalDateTime updatedAt;
 }
