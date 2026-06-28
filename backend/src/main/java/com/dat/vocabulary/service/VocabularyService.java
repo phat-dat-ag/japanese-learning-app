@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface VocabularyService {
 
-    Uni<List<VocabularyResponse>> findAll();
+    Uni<List<VocabularyResponse>> findAllVocabularies();
 
-    Uni<VocabularyResponse> findById(Long vocabularyId);
+    Uni<VocabularyResponse> findVocabularyById(Long vocabularyId);
 
-    Uni<VocabularyResponse> create(CreateVocabularyRequest request);
+    Uni<VocabularyResponse> createVocabulary(CreateVocabularyRequest request);
 }

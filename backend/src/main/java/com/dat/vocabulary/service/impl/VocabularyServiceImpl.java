@@ -21,7 +21,7 @@ public class VocabularyServiceImpl implements VocabularyService {
     VocabularyRepository vocabularyRepository;
 
     @WithSession
-    public Uni<List<VocabularyResponse>> findAll() {
+    public Uni<List<VocabularyResponse>> findAllVocabularies() {
         return vocabularyRepository.listAll()
                 .map(vocabularies ->
                         vocabularies.stream()
@@ -31,7 +31,7 @@ public class VocabularyServiceImpl implements VocabularyService {
     }
 
     @WithSession
-    public Uni<VocabularyResponse> findById(Long vocabularyId) {
+    public Uni<VocabularyResponse> findVocabularyById(Long vocabularyId) {
         return vocabularyRepository.findById(vocabularyId)
                 .onItem().ifNull().failWith(
                         () -> new VocabularyNotFoundException(vocabularyId)
@@ -40,8 +40,7 @@ public class VocabularyServiceImpl implements VocabularyService {
     }
 
     @WithTransaction
-    public Uni<VocabularyResponse> create(CreateVocabularyRequest request) {
-
+    public Uni<VocabularyResponse> createVocabulary(CreateVocabularyRequest request) {
         Vocabulary vocabulary = new Vocabulary();
 
         vocabulary.japanese = request.japanese();
