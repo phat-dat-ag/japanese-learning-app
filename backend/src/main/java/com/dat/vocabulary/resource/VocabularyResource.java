@@ -17,6 +17,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 
 @Path("/api/vocabularies")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,12 +28,20 @@ public class VocabularyResource extends BaseResource {
     VocabularyService vocabularyService;
 
     @GET
+    @Operation(
+            summary = "Get all vocabularies",
+            description = "Retrieve the complete list of Japanese vocabularies"
+    )
     public Uni<ApiResponse<VocabularyListDataResponse>> findAll() {
         return vocabularyService.findAll()
                 .map(vocabularies -> ok(new VocabularyListDataResponse(vocabularies)));
     }
 
     @GET
+    @Operation(
+            summary = "Get vocabulary by ID",
+            description = "Retrieve vocabulary details using the provided vocabulary ID"
+    )
     @Path("/{id}")
     public Uni<ApiResponse<VocabularyDataResponse>> findById(@PathParam("id") Long vocabularyId) {
         return vocabularyService.findById(vocabularyId)
@@ -40,6 +49,10 @@ public class VocabularyResource extends BaseResource {
     }
 
     @POST
+    @Operation(
+            summary = "Create a new vocabulary",
+            description = "Create and save a new Japanese vocabulary entry"
+    )
     public Uni<Response> create(@Valid CreateVocabularyRequest request) {
         return vocabularyService.create(request)
                 .map(vocabulary -> created(
