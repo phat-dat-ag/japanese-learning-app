@@ -1,0 +1,39 @@
+<section class="mx-auto max-w-4xl">
+    <div class="mb-8 text-center">
+        <p class="text-sm font-medium text-blue-600">Vocabulary Study</p>
+        <h2 class="mt-2 text-3xl font-bold text-slate-900">Flashcards</h2>
+        <p class="mt-2 text-slate-500">
+            Click the card to reveal meaning, pronunciation, and examples.
+        </p>
+    </div>
+
+    @if (loading()) {
+    <p class="text-center text-slate-500">Loading vocabularies...</p>
+    } @else if (errorMessage()) {
+    <p class="text-center text-red-600">{{ errorMessage() }}</p>
+    } @else if (currentVocabulary()) {
+    <app-flash-card [vocabulary]="currentVocabulary()!" [detail]="currentDetail()" [flipped]="flipped()"
+        (flip)="flipCard()">
+    </app-flash-card>
+
+    <div class="mt-8 flex items-center justify-center gap-4">
+        <button type="button"
+            class="rounded-xl border bg-white px-5 py-3 font-medium text-slate-700 shadow-sm disabled:cursor-not-allowed disabled:opacity-40"
+            [disabled]="currentIndex() === 0" (click)="previousCard()">
+            Previous
+        </button>
+
+        <p class="min-w-24 text-center text-sm text-slate-500">
+            {{ currentIndex() + 1 }} / {{ total() }}
+        </p>
+
+        <button type="button"
+            class="rounded-xl border bg-white px-5 py-3 font-medium text-slate-700 shadow-sm disabled:cursor-not-allowed disabled:opacity-40"
+            [disabled]="currentIndex() >= total() - 1" (click)="nextCard()">
+            Next
+        </button>
+    </div>
+    } @else {
+    <p class="text-center text-slate-500">No vocabularies found.</p>
+    }
+</section>
